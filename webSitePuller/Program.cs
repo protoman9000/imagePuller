@@ -14,19 +14,20 @@ namespace webSitePuller
             List<string> imageList = new List<string>();
 
             //Enter the webiste that we want.
+            Console.WriteLine("Enter in a webstie");
             string webSite = Console.ReadLine();
             WebClient targetSite = new WebClient();
 
-            string source = targetSite.DownloadString(webSite);
+            string source = targetSite.DownloadString("https://" + webSite);
 
             HtmlAgilityPack.HtmlDocument tDocument = new HtmlAgilityPack.HtmlDocument();
             tDocument.LoadHtml(source);
 
             foreach (var link in tDocument.DocumentNode.Descendants("img").Select(x => x.Attributes["src"]))
             {
-                imageList.Add(link.Attributes["src"].Value.ToString());
+                imageList.Add(link.Value.ToString());
             }
-            
+            Console.ReadKey();
         }
     }
 }
